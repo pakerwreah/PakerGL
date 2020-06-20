@@ -14,7 +14,12 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
+            "osx": {
+                "MIMode": "lldb",
+            },
+            "linux": {
+                "MIMode": "gdb",
+            },
             "preLaunchTask": "C/C++: clang++ build active file"
         }
     ]

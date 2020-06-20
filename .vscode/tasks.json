@@ -6,6 +6,7 @@
             "command": "/usr/bin/clang++",
             "linux": {
                 "args": [
+                    "-lGL",
                     "-lglfw",
                     "-lGLEW",
                     "-g",
@@ -35,6 +36,9 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "clear": true
             }
         }
     ],
