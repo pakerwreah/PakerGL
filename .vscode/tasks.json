@@ -11,6 +11,9 @@
                     "-lGLEW",
                     "-g",
                     "src/main.cpp",
+                    "src/VertexBuffer.cpp",
+                    "src/Shader.cpp",
+                    "vendor/stb_image/stb_image.cpp",
                     "-o",
                     "build/engine"
                 ]
@@ -23,6 +26,9 @@
                     "-lGLEW",
                     "-g",
                     "src/main.cpp",
+                    "src/VertexBuffer.cpp",
+                    "src/Shader.cpp",
+                    "vendor/stb_image/stb_image.cpp",
                     "-o",
                     "build/engine"
                 ]
