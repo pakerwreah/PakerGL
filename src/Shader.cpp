@@ -1,11 +1,11 @@
 #include "Shader.h"
 
 #include <GL/glew.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
 #include <cassert>
 #include <cstring>
+#include <fstream>
+#include <iostream>
+#include <vector>
 
 namespace PakerGL {
 
@@ -15,7 +15,7 @@ namespace PakerGL {
         if (type == "fragment" || type == "pixel")
             return GL_FRAGMENT_SHADER;
 
-		std::cerr << "Unknown shader type!" << std::endl;
+        std::cerr << "Unknown shader type!" << std::endl;
         return 0;
     }
 
@@ -59,7 +59,7 @@ namespace PakerGL {
                 std::cerr << "Could not read from file " << filepath << std::endl;
             }
         } else {
-			std::cerr << "Could not open from file " << filepath << std::endl;
+            std::cerr << "Could not open from file " << filepath << std::endl;
         }
 
         return result;
@@ -79,7 +79,7 @@ namespace PakerGL {
             assert(ShaderTypeFromString(type)); // Invalid shader type specified"
 
             size_t nextLinePos = source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
-            assert(nextLinePos != std::string::npos);// Syntax error
+            assert(nextLinePos != std::string::npos); // Syntax error
             pos = source.find(typeToken, nextLinePos); //Start of next shader type declaration line
 
             shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
@@ -115,8 +115,8 @@ namespace PakerGL {
 
                 glDeleteShader(shader);
 
-				std::cerr << infoLog.data() << std::endl;
-				std::cerr << "Shader compilation failure!" << std::endl;
+                std::cerr << infoLog.data() << std::endl;
+                std::cerr << "Shader compilation failure!" << std::endl;
                 break;
             }
 
@@ -155,6 +155,11 @@ namespace PakerGL {
             glDetachShader(program, id);
             glDeleteShader(id);
         }
+
+        float projection[16];
+        glGetFloatv(GL_PROJECTION_MATRIX, projection);
+        GLint location = glGetUniformLocation(m_RendererID, "projection");
+        glProgramUniformMatrix4fv(m_RendererID, location, 1, GL_FALSE, projection);
     }
 
     void Shader::bind() const {
@@ -165,30 +170,8 @@ namespace PakerGL {
         glUseProgram(0);
     }
 
-    void Shader::setInt(const std::string &name, int value) {
-        UploadUniformInt(name, value);
-    }
-
-    void Shader::setIntArray(const std::string &name, int *values, uint32_t count) {
-        UploadUniformIntArray(name, values, count);
-    }
-
-    void Shader::setFloat(const std::string &name, float value) {
-        UploadUniformFloat(name, value);
-    }
-
-    void Shader::UploadUniformInt(const std::string &name, int value) {
+    void Shader::setColor(const std::string &name, Color color) {
         GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform1i(location, value);
-    }
-
-    void Shader::UploadUniformIntArray(const std::string &name, int *values, uint32_t count) {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform1iv(location, count, values);
-    }
-
-    void Shader::UploadUniformFloat(const std::string &name, float value) {
-        GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-        glUniform1f(location, value);
+        glProgramUniform4f(m_RendererID, location, color.red, color.green, color.blue, color.alpha);
     }
 }

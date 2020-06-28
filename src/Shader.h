@@ -5,24 +5,22 @@
 
 namespace PakerGL {
 
+    struct Color {
+        float red, green, blue, alpha;
+    };
+
     class Shader {
       public:
         Shader(const std::string &filepath);
         Shader(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc);
         virtual ~Shader();
 
-        virtual void bind() const;
-        virtual void unbind() const;
+        void bind() const;
+        void unbind() const;
 
-        virtual void setInt(const std::string &name, int value);
-        virtual void setIntArray(const std::string &name, int *values, uint32_t count);
-        virtual void setFloat(const std::string &name, float value);
+        void setColor(const std::string &name, Color color);
 
-        virtual const std::string &getName() const { return m_Name; }
-
-        void UploadUniformInt(const std::string &name, int value);
-        void UploadUniformIntArray(const std::string &name, int *values, uint32_t count);
-        void UploadUniformFloat(const std::string &name, float value);
+        const std::string &getName() const { return m_Name; }
 
       private:
         std::string readFile(const std::string &filepath);

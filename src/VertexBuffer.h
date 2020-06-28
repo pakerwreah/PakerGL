@@ -1,39 +1,25 @@
 #pragma once
 
-#include <iostream>
+#include "Buffer.h"
+#include "Vertex.h"
 
 namespace PakerGL {
 
-    class VertexBuffer {
-      public:
-        VertexBuffer(uint32_t size);
-        VertexBuffer(const void *vertices, uint32_t size);
-        virtual ~VertexBuffer();
-
-        void bind() const;
-        void unbind() const;
-
-        void setData(const void *data, uint32_t size);
-
+    class VertexBuffer : private Buffer {
       private:
-        uint32_t m_RendererID;
-    };
+        void initialize();
 
-    class IndexBuffer {
       public:
-        IndexBuffer(uint32_t *indices, uint32_t count);
-        virtual ~IndexBuffer();
+        VertexBuffer(size_t size);
+        VertexBuffer(const Vertex *data, size_t size);
+        virtual ~VertexBuffer() = default;
 
-        void bind() const;
-        void unbind() const;
+        using Buffer::bind;
+        using Buffer::unbind;
 
-        uint32_t getCount() const {
-            return count;
-        }
+        using Buffer::getSize;
 
-      private:
-        uint32_t m_RendererID;
-        uint32_t count;
+        void setData(const Vertex *data, size_t offset, size_t size);
     };
 
 }
