@@ -1,25 +1,15 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <iostream>
+// avoid missing raise.c
+#ifdef __linux__
+#define __debugbreak() \
+    __asm__("int $3"); \
+    __asm__("nop")
+#else
+#include <cassert>
+#define __debugbreak() assert(false)
+#endif
 
-inline void checkErrors() {
-    GLenum err;
-    while ((err = glGetError()) != GL_NO_ERROR) {
-        std::cerr << "[" << err << "] ";
-        switch (err) {
-        case GL_INVALID_ENUM:
-            std::cerr << "Invalid enum";
-            break;
-        case GL_INVALID_OPERATION:
-            std::cerr << "Invalid operation";
-            break;
-
-        default:
-            std::cerr << glewGetErrorString(err);
-            break;
-        }
-        std::cerr << std::endl;
-        assert(false);
-    }
+namespace PakerGL {
+    void checkErrors();
 }
