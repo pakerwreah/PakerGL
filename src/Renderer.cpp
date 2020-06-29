@@ -1,4 +1,6 @@
 #include "Renderer.h"
+#include "debug.h"
+
 #include <GL/glew.h>
 
 namespace PakerGL {
@@ -38,7 +40,7 @@ namespace PakerGL {
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_QUADS, 0, dataSize / sizeof(Vertex));
+        glDrawArrays(GL_TRIANGLES, 0, dataSize / sizeof(Vertex));
     }
 
 }

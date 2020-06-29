@@ -1,4 +1,5 @@
 #include "VertexBuffer.h"
+
 #include <GL/glew.h>
 
 namespace PakerGL {

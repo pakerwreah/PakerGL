@@ -9,7 +9,9 @@ namespace PakerGL {
         size_t size;
 
       protected:
-        uint m_RendererID;
+        uint bufferID, vertexArrayID;
+
+        void create(size_t size);
 
       public:
         Buffer(size_t maxSize);

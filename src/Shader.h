@@ -1,7 +1,8 @@
 #pragma once
 
+#include <iostream>
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 namespace PakerGL {
 
@@ -10,26 +11,24 @@ namespace PakerGL {
     };
 
     class Shader {
+      private:
+        uint m_RendererID;
+        std::vector<uint> shaders;
+
       public:
-        Shader(const std::string &filepath);
-        Shader(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc);
+        Shader();
         virtual ~Shader();
 
         void bind() const;
         void unbind() const;
 
+        void setProjection(int width, int height);
+
         void setColor(const std::string &name, Color color);
 
-        const std::string &getName() const { return m_Name; }
+        void compile(uint type, const std::string &filepath);
 
-      private:
-        std::string readFile(const std::string &filepath);
-        std::unordered_map<uint32_t, std::string> preProcess(const std::string &source);
-        void compile(const std::unordered_map<uint32_t, std::string> &shaderSources);
-
-      private:
-        uint32_t m_RendererID;
-        std::string m_Name;
+        void link();
     };
 
 }

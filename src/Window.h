@@ -13,7 +13,7 @@ namespace PakerGL {
         GLFWwindow *window;
 
       public:
-        Window(int width, int height);
+        Window(const std::string &title, int width, int height);
 
         void loop(Renderer &renderer, std::function<void(GLFWwindow *)> processInput);
     };

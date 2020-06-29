@@ -7,7 +7,7 @@ namespace PakerGL {
 
     class Object {
       private:
-        Vertex vertexData[4];
+        Vertex vertexData[6];
 
       public:
         bool needsUpdate = true;

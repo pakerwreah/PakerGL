@@ -1,24 +1,33 @@
 #include "Window.h"
+#include "debug.h"
+
 #include <iostream>
 
 namespace PakerGL {
 
-    Window::Window(int width, int height) {
-        /* Initialize the library */
+    Window::Window(const std::string &title, int width, int height) {
+
         if (!glfwInit()) {
+            std::cerr << "GLFW failed to initialize." << std::endl;
             exit(-1);
         }
 
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        glfwSetErrorCallback([](int code, const char *error) {
+            std::cerr << "[" << code << "] " << error << std::endl;
+        });
 
-        /* Create a windowed mode window and its OpenGL context */
-        window = glfwCreateWindow(width, height, "Hello World", NULL, NULL);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
         if (!window) {
             glfwTerminate();
             exit(-1);
         }
 
-        /* Make the window's context current */
         glfwMakeContextCurrent(window);
 
         if (glewInit() != GLEW_OK) {
@@ -26,11 +35,6 @@ namespace PakerGL {
         }
 
         std::cout << glGetString(GL_VERSION) << std::endl;
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0.0f, width, height, 0.0f, 0.0f, 1.0f);
-        glViewport(0, 0, width, height);
     }
 
     void Window::loop(Renderer &renderer, std::function<void(GLFWwindow *)> processInput) {
@@ -43,6 +47,8 @@ namespace PakerGL {
             glfwPollEvents();
 
             processInput(window);
+
+            checkErrors();
         }
 
         glfwTerminate();

@@ -6,6 +6,7 @@
             "command": "/usr/bin/clang++",
             "linux": {
                 "args": [
+                    "-std=c++17",
                     "-lGL",
                     "-lglfw",
                     "-lGLEW",
@@ -24,6 +25,7 @@
             },
             "osx": {
                 "args": [
+                    "-std=c++17",
                     "-framework",
                     "OpenGL",
                     "-lglfw",
