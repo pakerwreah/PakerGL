@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "clang++ - Build and debug active file",
+            "name": "Build and Run",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/engine",
@@ -20,7 +20,7 @@
             "linux": {
                 "MIMode": "gdb",
             },
-            "preLaunchTask": "C/C++: clang++ build active file"
+            "preLaunchTask": "Build"
         }
     ]
 }

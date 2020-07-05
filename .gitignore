@@ -1,6 +1,5 @@
 .DS_Store
 .idea
-/build/*
-!.keep
+/build
 *.iml
 *.dSYM

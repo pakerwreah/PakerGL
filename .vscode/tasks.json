@@ -2,49 +2,8 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "C/C++: clang++ build active file",
-            "command": "/usr/bin/clang++",
-            "linux": {
-                "args": [
-                    "-std=c++17",
-                    "-lGL",
-                    "-lglfw",
-                    "-lGLEW",
-                    "-g",
-                    "src/main.cpp",
-                    "src/debug.cpp",
-                    "src/Buffer.cpp",
-                    "src/VertexBuffer.cpp",
-                    "src/Shader.cpp",
-                    "src/Object.cpp",
-                    "src/Renderer.cpp",
-                    "src/Window.cpp",
-                    "vendor/stb_image/stb_image.cpp",
-                    "-o",
-                    "build/engine"
-                ]
-            },
-            "osx": {
-                "args": [
-                    "-std=c++17",
-                    "-framework",
-                    "OpenGL",
-                    "-lglfw",
-                    "-lGLEW",
-                    "-g",
-                    "src/main.cpp",
-                    "src/debug.cpp",
-                    "src/Buffer.cpp",
-                    "src/VertexBuffer.cpp",
-                    "src/Shader.cpp",
-                    "src/Object.cpp",
-                    "src/Renderer.cpp",
-                    "src/Window.cpp",
-                    "vendor/stb_image/stb_image.cpp",
-                    "-o",
-                    "build/engine"
-                ]
-            },
+            "label": "Build",
+            "command": "cmake -Bbuild && make -C build",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
