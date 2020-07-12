@@ -10,9 +10,9 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
 
-include_directories(vendor)
+include_directories(vendor/stb_image)
 
-file(GLOB sources "src/*.cpp")
+file(GLOB sources "src/*.cpp" "vendor/**/*.cpp")
 
 add_executable(engine ${sources})
 

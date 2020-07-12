@@ -53,9 +53,14 @@ namespace PakerGL {
         glProgramUniformMatrix4fv(m_RendererID, location, 1, GL_FALSE, glm::value_ptr(projection));
     }
 
-    void Shader::setColor(const std::string &name, Color color) {
+    void Shader::setColor(const std::string &name, const Color &color) {
         int location = glGetUniformLocation(m_RendererID, name.c_str());
         glProgramUniform4f(m_RendererID, location, color.red, color.green, color.blue, color.alpha);
+    }
+
+    void Shader::setTexture(const std::string &name, int unit) {
+        int location = glGetUniformLocation(m_RendererID, name.c_str());
+        glProgramUniform1i(m_RendererID, location, unit);
     }
 
     void Shader::compile(uint type, const std::string &filepath) {

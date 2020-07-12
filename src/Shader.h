@@ -1,14 +1,12 @@
 #pragma once
 
+#include "Types.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
 namespace PakerGL {
-
-    struct Color {
-        float red, green, blue, alpha;
-    };
 
     class Shader {
       private:
@@ -24,7 +22,9 @@ namespace PakerGL {
 
         void setProjection(int width, int height);
 
-        void setColor(const std::string &name, Color color);
+        void setColor(const std::string &name, const Color &color);
+
+        void setTexture(const std::string &name, int unit);
 
         void compile(uint type, const std::string &filepath);
 

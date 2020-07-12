@@ -37,10 +37,14 @@ namespace PakerGL {
         std::cout << glGetString(GL_VERSION) << std::endl;
     }
 
-    void Window::loop(Renderer &renderer, std::function<void(GLFWwindow *)> processInput) {
+    void Window::setRenderer(std::shared_ptr<Renderer> renderer) {
+        m_Renderer = std::move(renderer);
+    }
+
+    void Window::loop(const std::function<void(GLFWwindow *)> &processInput) {
         while (!glfwWindowShouldClose(window)) {
 
-            renderer.render();
+            m_Renderer->render();
 
             glfwSwapBuffers(window);
 

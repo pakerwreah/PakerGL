@@ -1,21 +1,27 @@
 #pragma once
 
+#include "Renderer.h"
+
+#define GL_SILENCE_DEPRECATION
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <functional>
 
-#include "Renderer.h"
+class GLFWwindow;
 
 namespace PakerGL {
 
     class Window {
       private:
         GLFWwindow *window;
+        std::shared_ptr<Renderer> m_Renderer;
 
       public:
         Window(const std::string &title, int width, int height);
 
-        void loop(Renderer &renderer, std::function<void(GLFWwindow *)> processInput);
+        void setRenderer(std::shared_ptr<Renderer> renderer);
+
+        void loop(const std::function<void(GLFWwindow *)> &processInput);
     };
 
 }
