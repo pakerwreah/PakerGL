@@ -34,7 +34,7 @@ int main() {
     object4->setTexture(texCoord);
 
     Shader shader;
-    shader.compile(GL_VERTEX_SHADER, "res/shaders/position.vert");
+    shader.compile(GL_VERTEX_SHADER, "res/shaders/vertex.vert");
     shader.compile(GL_FRAGMENT_SHADER, "res/shaders/texture.frag");
     shader.link();
     shader.setColor("u_color", { 0.5f, 1.0f, 1.0f, 0.6f });
