@@ -7,6 +7,7 @@ namespace PakerGL {
 
     class Object {
       private:
+        Rect m_Rect;
         Vertex vertexData[6];
 
       public:
@@ -19,7 +20,9 @@ namespace PakerGL {
 
         size_t getSize() const;
 
-        void setTexture(const Rect &rect);
+        void setTexture(const Texture &rect, bool keepAspect = true);
+
+        void resize(const Rect &rect);
     };
 
 }

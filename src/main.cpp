@@ -16,22 +16,33 @@ int main() {
 
     window.setRenderer(renderer);
 
-    auto object1 = std::make_shared<Object>(150, 100, 50, 50);
-    auto object2 = std::make_shared<Object>(250, 150, 80, 50);
-    auto object3 = std::make_shared<Object>(400, 200, 50, 80);
-    auto object4 = std::make_shared<Object>(200, 250, 120, 120);
+    auto object1 = std::make_shared<Object>(100, 100, 100, 100);
+    auto object2 = std::make_shared<Object>(230, 150, 80, 50);
+    auto object3 = std::make_shared<Object>(350, 200, 50, 80);
+    auto object4 = std::make_shared<Object>(380, 60, 100, 100);
+    auto object5 = std::make_shared<Object>(180, 260, 120, 120);
 
     renderer->add(object1);
     renderer->add(object2);
     renderer->add(object3);
     renderer->add(object4);
+    renderer->add(object5);
 
-    Texture texture({ { "gastly", "res/sprites/gastly.png" } });
+    TextureMap textureMap({
+        // --
+        { "gastly", "res/sprites/gastly.png" },
+        { "haunter", "res/sprites/haunter.png" },
+        { "gengar", "res/sprites/gengar.png" }
+        // --
+    });
 
-    Rect texCoord = texture.getCoord("gastly");
+    Texture haunter = textureMap["haunter"];
+    Texture gastly = textureMap["gastly"];
+    Texture gengar = textureMap["gengar"];
 
-    object1->setTexture(texCoord);
-    object4->setTexture(texCoord);
+    object1->setTexture(haunter);
+    object4->setTexture(gastly);
+    object5->setTexture(gengar);
 
     Shader shader;
     shader.compile(GL_VERTEX_SHADER, "res/shaders/vertex.vert");
