@@ -11,13 +11,13 @@ namespace PakerGL {
 
     void Renderer::add(std::shared_ptr<Object> object) {
         if (objects.insert(object).second) {
-            dataSize += object->getSize();
+            dataSize += object->getVertices().size() * sizeof(Vertex);
         }
     }
 
     void Renderer::remove(std::shared_ptr<Object> object) {
         if (objects.erase(object)) {
-            dataSize -= object->getSize();
+            dataSize -= object->getVertices().size() * sizeof(Vertex);
         }
     }
 
@@ -30,11 +30,13 @@ namespace PakerGL {
 
         size_t offset = 0;
         for (auto &obj : objects) {
+            const auto &vertices = obj->getVertices();
+            const size_t size = vertices.size() * sizeof(Vertex);
             if (bufferResized || obj->needsUpdate) {
-                Buffer::setData(obj->getVertices(), offset, obj->getSize());
+                Buffer::setData(vertices.data(), offset, size);
                 obj->needsUpdate = false;
-                offset += obj->getSize();
             }
+            offset += size;
         }
 
         glClear(GL_COLOR_BUFFER_BIT);

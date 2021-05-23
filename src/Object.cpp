@@ -14,24 +14,35 @@ namespace PakerGL {
         m_rect = rect;
 
         // Triangle 1
-        vertexData[0].origin = rect.origin();
-        vertexData[1].origin = { rect.end().x, rect.y };
-        vertexData[2].origin = { rect.x, rect.end().y };
+        m_vertices[0].origin = rect.origin();
+        m_vertices[1].origin = { rect.end().x, rect.y };
+        m_vertices[2].origin = { rect.x, rect.end().y };
 
         // Triangle 2
-        vertexData[3].origin = { rect.end().x, rect.y };
-        vertexData[4].origin = { rect.x, rect.end().y };
-        vertexData[5].origin = rect.end();
+        m_vertices[3].origin = { rect.end().x, rect.y };
+        m_vertices[4].origin = { rect.x, rect.end().y };
+        m_vertices[5].origin = rect.end();
 
         needsUpdate = true;
     }
 
-    const Vertex *Object::getVertices() const {
-        return vertexData;
+    void Object::moveTo(const Point &point) {
+        Rect rect = m_rect;
+        rect.x = point.x;
+        rect.y = point.y;
+        resize(rect);
     }
 
-    size_t Object::getSize() const {
-        return sizeof(vertexData);
+    void Object::moveBy(const Point &point) {
+        moveTo(m_rect.origin() + point);
+    }
+
+    Object::Vertices Object::getVertices() const {
+        return m_vertices;
+    }
+
+    Rect Object::getRect() const {
+        return m_rect;
     }
 
     void Object::setTexture(const Texture &texture, bool keepAspect) {
@@ -52,13 +63,13 @@ namespace PakerGL {
         auto rect = texture.mapCoord;
 
         // Triangle 1
-        vertexData[0].texture = rect.origin();
-        vertexData[1].texture = { rect.end().x, rect.y };
-        vertexData[2].texture = { rect.x, rect.end().y };
+        m_vertices[0].texture = rect.origin();
+        m_vertices[1].texture = { rect.end().x, rect.y };
+        m_vertices[2].texture = { rect.x, rect.end().y };
 
         // Triangle 2
-        vertexData[3].texture = { rect.end().x, rect.y };
-        vertexData[4].texture = { rect.x, rect.end().y };
-        vertexData[5].texture = rect.end();
+        m_vertices[3].texture = { rect.end().x, rect.y };
+        m_vertices[4].texture = { rect.x, rect.end().y };
+        m_vertices[5].texture = rect.end();
     }
 }

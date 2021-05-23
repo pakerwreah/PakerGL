@@ -8,11 +8,17 @@ namespace PakerGL {
 
     struct Rect {
         float x, y, width, height;
+
         inline Point origin() const {
             return { x, y };
         }
+
         inline Point end() const {
             return { x + width, y + height };
+        }
+
+        inline Point center() const {
+            return { x + width / 2, y + height / 2 };
         }
     };
 

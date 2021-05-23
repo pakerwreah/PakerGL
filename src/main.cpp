@@ -15,17 +15,17 @@ int main() {
 
     window.setRenderer(renderer);
 
-    auto object1 = std::make_shared<Object>(100, 100, 100, 100);
-    auto object2 = std::make_shared<Object>(230, 150, 80, 50);
-    auto object3 = std::make_shared<Object>(350, 200, 50, 80);
-    auto object4 = std::make_shared<Object>(380, 60, 100, 100);
-    auto object5 = std::make_shared<Object>(180, 260, 120, 120);
+    auto haunter = std::make_shared<Object>(100, 100, 100, 100);
+    auto object1 = std::make_shared<Object>(230, 150, 80, 50);
+    auto object2 = std::make_shared<Object>(350, 200, 50, 80);
+    auto gastly = std::make_shared<Object>(380, 60, 100, 100);
+    auto gengar = std::make_shared<Object>(180, 260, 120, 120);
 
+    renderer->add(haunter);
     renderer->add(object1);
     renderer->add(object2);
-    renderer->add(object3);
-    renderer->add(object4);
-    renderer->add(object5);
+    renderer->add(gastly);
+    renderer->add(gengar);
 
     TextureMap textureMap({
         // --
@@ -35,13 +35,9 @@ int main() {
         // --
     });
 
-    Texture haunter = textureMap["haunter"];
-    Texture gastly = textureMap["gastly"];
-    Texture gengar = textureMap["gengar"];
-
-    object1->setTexture(haunter);
-    object4->setTexture(gastly);
-    object5->setTexture(gengar);
+    haunter->setTexture(textureMap["haunter"]);
+    gastly->setTexture(textureMap["gastly"]);
+    gengar->setTexture(textureMap["gengar"]);
 
     Shader shader;
     shader.compile(GL_VERTEX_SHADER, "res/shaders/vertex.vert");
@@ -52,11 +48,36 @@ int main() {
     shader.setProjection(width, height);
     shader.bind();
 
-    window.loop([](GLFWwindow *window) {
+    Point gastly_circle_center = gastly->getRect().center();
+    constexpr double radius = 20;
+    constexpr int steps = 120;
+    constexpr double step_angle = 2 * M_PI / steps;
+    int gastly_move_step = 0;
+
+    window.loop([&](GLFWwindow *window) {
         // FIXME: Esc not working on Linux =(
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
         }
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+            haunter->moveBy({ -1, 0 });
+        }
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+            haunter->moveBy({ +1, 0 });
+        }
+        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+            haunter->moveBy({ 0, -1 });
+        }
+        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+            haunter->moveBy({ 0, +1 });
+        }
+
+        const double angle = gastly_move_step * step_angle;
+        gastly->moveTo({
+            gastly_circle_center.x + radius * cos(angle),
+            gastly_circle_center.y + radius * sin(angle),
+        });
+        gastly_move_step = (gastly_move_step + 1) % steps;
     });
 
     return 0;
