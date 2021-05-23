@@ -1,9 +1,10 @@
 #include "Window.h"
 #include "debug.h"
+#include <sstream>
 
 namespace PakerGL {
 
-    Window::Window(const std::string &title, int width, int height) {
+    Window::Window(const std::string &title, int width, int height) : m_title(title) {
 
         if (!glfwInit()) {
             std::cerr << "GLFW failed to initialize." << std::endl;
@@ -39,6 +40,20 @@ namespace PakerGL {
         m_Renderer = std::move(renderer);
     }
 
+    void Window::displayFPS() {
+        static int frames = 0;
+        static double lastTime = 0;
+        double currentTime = glfwGetTime();
+        frames++;
+        if (currentTime - lastTime >= 1.0) {
+            std::ostringstream ss;
+            ss << m_title << " (" << frames << " fps)";
+            glfwSetWindowTitle(window, ss.str().c_str());
+            frames = 0;
+            lastTime = currentTime;
+        }
+    }
+
     void Window::loop(const std::function<void(GLFWwindow *)> &processInput) {
         while (!glfwWindowShouldClose(window)) {
 
@@ -51,6 +66,8 @@ namespace PakerGL {
             processInput(window);
 
             checkErrors();
+
+            displayFPS();
         }
 
         glfwTerminate();

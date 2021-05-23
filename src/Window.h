@@ -13,6 +13,7 @@ namespace PakerGL {
 
     class Window {
       private:
+        std::string m_title;
         GLFWwindow *window;
         std::shared_ptr<Renderer> m_Renderer;
 
@@ -22,6 +23,8 @@ namespace PakerGL {
         void setRenderer(std::shared_ptr<Renderer> renderer);
 
         void loop(const std::function<void(GLFWwindow *)> &processInput);
+
+        void displayFPS();
     };
 
 }
