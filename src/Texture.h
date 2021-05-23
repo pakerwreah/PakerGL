@@ -15,14 +15,12 @@ namespace PakerGL {
 
     class TextureMap {
       private:
-        uint textureID;
+        uint textureID = 0;
         std::unordered_map<std::string, Texture> textureMap;
 
       public:
         explicit TextureMap(const std::unordered_map<std::string, std::string> &paths);
         virtual ~TextureMap();
-
-        void bind(int unit);
 
         Texture operator[](const std::string &name) const;
     };

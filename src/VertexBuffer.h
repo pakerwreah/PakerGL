@@ -7,19 +7,18 @@ namespace PakerGL {
 
     class VertexBuffer : private Buffer {
       private:
-        void initialize();
+        static void initialize();
 
       public:
-        VertexBuffer(size_t size);
+        explicit VertexBuffer(size_t size);
         VertexBuffer(const Vertex *data, size_t size);
-        virtual ~VertexBuffer() = default;
+        ~VertexBuffer() override = default;
 
         using Buffer::bind;
         using Buffer::unbind;
 
         using Buffer::getSize;
-
-        void setData(const Vertex *data, size_t offset, size_t size);
+        using Buffer::setData;
     };
 
 }

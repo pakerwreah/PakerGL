@@ -3,3 +3,4 @@
 /build
 *.iml
 *.dSYM
+cmake-build-debug

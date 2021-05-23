@@ -1,6 +1,4 @@
 #include "Renderer.h"
-#include "debug.h"
-
 #include <GL/glew.h>
 
 namespace PakerGL {
@@ -33,14 +31,14 @@ namespace PakerGL {
         size_t offset = 0;
         for (auto &obj : objects) {
             if (bufferResized || obj->needsUpdate) {
-                buffer->setData(obj->getVertices(), offset, obj->getSize());
+                Buffer::setData(obj->getVertices(), offset, obj->getSize());
                 obj->needsUpdate = false;
                 offset += obj->getSize();
             }
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, dataSize / sizeof(Vertex));
+        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)(dataSize / sizeof(Vertex)));
     }
 
 }

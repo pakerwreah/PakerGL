@@ -7,14 +7,14 @@ namespace PakerGL {
 
     class Object {
       private:
-        Rect m_Rect;
+        Rect m_rect;
         Vertex vertexData[6];
 
       public:
         bool needsUpdate = true;
 
         Object(float x, float y, float width, float height);
-        Object(const Rect &rect);
+        explicit Object(const Rect &rect);
 
         const Vertex *getVertices() const;
 

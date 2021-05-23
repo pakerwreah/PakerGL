@@ -1,18 +1,17 @@
 #include "Object.h"
-#include <stb_image.h>
 
 namespace PakerGL {
 
     Object::Object(float x, float y, float width, float height)
-        : Object(std::move(Rect { x, y, width, height })) {
+        : Object(Rect { x, y, width, height }) {
     }
 
-    Object::Object(const Rect &rect) {
-        resize(rect);
+    Object::Object(const Rect &rect) : m_rect(rect) {
+        Object::resize(rect);
     }
 
     void Object::resize(const Rect &rect) {
-        m_Rect = rect;
+        m_rect = rect;
 
         // Triangle 1
         vertexData[0].origin = rect.origin();
@@ -38,16 +37,16 @@ namespace PakerGL {
     void Object::setTexture(const Texture &texture, bool keepAspect) {
 
         if (keepAspect) {
-            float texRatio = texture.width / (float)texture.height;
-            float objRatio = m_Rect.width / (float)m_Rect.height;
+            float texRatio = (float)texture.width / (float)texture.height;
+            float objRatio = m_rect.width / m_rect.height;
 
             if (texRatio > objRatio) {
-                m_Rect.height = m_Rect.width / texRatio;
+                m_rect.height = m_rect.width / texRatio;
             } else {
-                m_Rect.width = m_Rect.height * texRatio;
+                m_rect.width = m_rect.height * texRatio;
             }
 
-            resize(m_Rect);
+            resize(m_rect);
         }
 
         auto rect = texture.mapCoord;

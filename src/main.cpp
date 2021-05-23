@@ -3,7 +3,6 @@
 #include "Renderer.h"
 #include "Shader.h"
 #include "Window.h"
-#include "debug.h"
 
 using namespace PakerGL;
 

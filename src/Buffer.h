@@ -6,25 +6,25 @@ namespace PakerGL {
 
     class Buffer {
       private:
-        size_t size;
+        size_t m_size = 0;
 
       protected:
-        uint bufferID, vertexArrayID;
+        uint bufferID = 0, vertexArrayID = 0;
 
         void create(size_t size);
 
       public:
-        Buffer(size_t maxSize);
+        explicit Buffer(size_t maxSize);
         Buffer(const void *data, size_t size);
         virtual ~Buffer();
 
         void bind() const;
-        void unbind() const;
+        static void unbind();
 
-        size_t getSize();
+        size_t getSize() const;
 
-        void setData(const void *data, size_t offset, size_t size);
-        void setAttribute(uint index, uint count, size_t size, size_t offset);
+        static void setData(const void *data, size_t offset, size_t size);
+        static void setAttribute(uint index, uint count, size_t size, size_t offset);
     };
 
 }

@@ -5,8 +5,8 @@
 namespace PakerGL {
 
     struct Vertex {
-        Point origin { 0, 0 };
-        Point texture { -1, -1 };
+        [[maybe_unused]] Point origin { 0, 0 };
+        [[maybe_unused]] Point texture { -1, -1 };
     };
 
 }

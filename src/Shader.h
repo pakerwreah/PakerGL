@@ -18,13 +18,13 @@ namespace PakerGL {
         virtual ~Shader();
 
         void bind() const;
-        void unbind() const;
+        static void unbind();
 
-        void setProjection(int width, int height);
+        void setProjection(int width, int height) const;
 
-        void setColor(const std::string &name, const Color &color);
+        void setColor(const std::string &name, const Color &color) const;
 
-        void setTexture(const std::string &name, int unit);
+        void setTexture(const std::string &name, int unit) const;
 
         void compile(uint type, const std::string &filepath);
 
