@@ -17,3 +17,10 @@ file(GLOB sources "src/*.cpp" "vendor/**/*.cpp")
 add_executable(engine ${sources})
 
 target_link_libraries(engine ${OPENGL_LIBRARIES} glfw GLEW::GLEW)
+
+add_custom_command(
+        TARGET engine POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/res
+        ${CMAKE_CURRENT_BINARY_DIR}/res
+)
