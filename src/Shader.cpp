@@ -29,15 +29,15 @@ namespace PakerGL {
     }
 
     Shader::Shader() {
-        m_RendererID = glCreateProgram();
+        m_program = glCreateProgram();
     }
 
     Shader::~Shader() {
-        glDeleteProgram(m_RendererID);
+        glDeleteProgram(m_program);
     }
 
     void Shader::bind() const {
-        glUseProgram(m_RendererID);
+        glUseProgram(m_program);
     }
 
     void Shader::unbind() {
@@ -45,19 +45,19 @@ namespace PakerGL {
     }
 
     void Shader::setProjection(int width, int height) const {
-        int location = glGetUniformLocation(m_RendererID, "projection");
+        int location = glGetUniformLocation(m_program, "projection");
         glm::mat4 projection = glm::ortho(0.f, (float)width, (float)height, 0.f, -1.f, 1.f);
-        glProgramUniformMatrix4fv(m_RendererID, location, 1, GL_FALSE, glm::value_ptr(projection));
+        glProgramUniformMatrix4fv(m_program, location, 1, GL_FALSE, glm::value_ptr(projection));
     }
 
     void Shader::setColor(const std::string &name, const Color &color) const {
-        int location = glGetUniformLocation(m_RendererID, name.c_str());
-        glProgramUniform4f(m_RendererID, location, color.red, color.green, color.blue, color.alpha);
+        int location = glGetUniformLocation(m_program, name.c_str());
+        glProgramUniform4f(m_program, location, color.red, color.green, color.blue, color.alpha);
     }
 
     void Shader::setTexture(const std::string &name, int unit) const {
-        int location = glGetUniformLocation(m_RendererID, name.c_str());
-        glProgramUniform1i(m_RendererID, location, unit);
+        int location = glGetUniformLocation(m_program, name.c_str());
+        glProgramUniform1i(m_program, location, unit);
     }
 
     void Shader::compile(uint type, const std::string &filepath) {
@@ -89,28 +89,28 @@ namespace PakerGL {
 
     void Shader::link() {
         for (auto shader : shaders) {
-            glAttachShader(m_RendererID, shader);
+            glAttachShader(m_program, shader);
         }
 
         // Link our program
-        glLinkProgram(m_RendererID);
+        glLinkProgram(m_program);
 
         int isLinked = 0;
-        glGetProgramiv(m_RendererID, GL_LINK_STATUS, &isLinked);
+        glGetProgramiv(m_program, GL_LINK_STATUS, &isLinked);
         if (isLinked == GL_FALSE) {
             int maxLength = 0;
-            glGetProgramiv(m_RendererID, GL_INFO_LOG_LENGTH, &maxLength);
+            glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &maxLength);
 
             // The maxLength includes the NULL character
             std::vector<char> infoLog((size_t)maxLength);
-            glGetProgramInfoLog(m_RendererID, maxLength, &maxLength, &infoLog[0]);
+            glGetProgramInfoLog(m_program, maxLength, &maxLength, &infoLog[0]);
 
             std::cerr << "Shader link failure!" << std::endl
                       << infoLog.data() << std::endl;
         }
 
         for (auto shader : shaders) {
-            glDetachShader(m_RendererID, shader);
+            glDetachShader(m_program, shader);
             glDeleteShader(shader);
         }
     }

@@ -10,7 +10,7 @@ namespace PakerGL {
 
     class Shader {
       private:
-        uint m_RendererID;
+        uint m_program;
         std::vector<uint> shaders;
 
       public:

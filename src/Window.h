@@ -14,8 +14,8 @@ namespace PakerGL {
     class Window {
       private:
         std::string m_title;
-        GLFWwindow *window;
-        std::shared_ptr<Renderer> m_Renderer;
+        GLFWwindow *m_window;
+        std::shared_ptr<Renderer> m_renderer;
 
       public:
         Window(const std::string &title, int width, int height);

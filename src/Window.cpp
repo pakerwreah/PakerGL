@@ -21,13 +21,13 @@ namespace PakerGL {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-        if (!window) {
+        m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        if (!m_window) {
             glfwTerminate();
             exit(-1);
         }
 
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(m_window);
 
         if (glewInit() != GLEW_OK) {
             exit(-1);
@@ -37,7 +37,7 @@ namespace PakerGL {
     }
 
     void Window::setRenderer(std::shared_ptr<Renderer> renderer) {
-        m_Renderer = std::move(renderer);
+        m_renderer = std::move(renderer);
     }
 
     void Window::displayFPS() {
@@ -48,22 +48,22 @@ namespace PakerGL {
         if (currentTime - lastTime >= 1.0) {
             std::ostringstream ss;
             ss << m_title << " (" << frames << " fps)";
-            glfwSetWindowTitle(window, ss.str().c_str());
+            glfwSetWindowTitle(m_window, ss.str().c_str());
             frames = 0;
             lastTime = currentTime;
         }
     }
 
     void Window::loop(const std::function<void(GLFWwindow *)> &processInput) {
-        while (!glfwWindowShouldClose(window)) {
+        while (!glfwWindowShouldClose(m_window)) {
 
-            m_Renderer->render();
+            m_renderer->render();
 
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(m_window);
 
             glfwPollEvents();
 
-            processInput(window);
+            processInput(m_window);
 
             checkErrors();
 
