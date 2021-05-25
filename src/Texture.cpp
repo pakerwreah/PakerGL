@@ -24,7 +24,10 @@ namespace PakerGL {
                 auto path = key_path.second;
                 Texture texture {};
                 stbi_uc *pixels = stbi_load(path.c_str(), &texture.width, &texture.height, nullptr, STBI_rgb_alpha);
-                assert(pixels != nullptr);
+                if (!pixels) {
+                    std::cerr << path << " - " << stbi_failure_reason();
+                    exit(EXIT_FAILURE);
+                }
                 TexturePixels texturePixels { key, texture, pixels };
                 total_height = std::max(texture.height, total_height);
                 total_width += texture.width;
