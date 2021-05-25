@@ -8,7 +8,7 @@ namespace PakerGL {
 
         if (!glfwInit()) {
             std::cerr << "GLFW failed to initialize." << std::endl;
-            exit(-1);
+            exit(EXIT_FAILURE);
         }
 
         glfwSetErrorCallback([](int code, const char *error) {
@@ -24,13 +24,13 @@ namespace PakerGL {
         m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!m_window) {
             glfwTerminate();
-            exit(-1);
+            exit(EXIT_FAILURE);
         }
 
         glfwMakeContextCurrent(m_window);
 
         if (glewInit() != GLEW_OK) {
-            exit(-1);
+            exit(EXIT_FAILURE);
         }
 
         std::cout << glGetString(GL_VERSION) << std::endl;
