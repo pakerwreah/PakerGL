@@ -1,31 +1,22 @@
 #include "Shader.h"
 
 #include <GL/glew.h>
-#include <fstream>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <fstream>
+#include <sstream>
 
 namespace PakerGL {
 
     static std::string readFile(const std::string &filepath) {
-        std::string result;
-        std::ifstream in(filepath, std::ios::in | std::ios::binary);
-        if (in) {
-            in.seekg(0, std::ios::end);
-            std::streamsize size = in.tellg();
-            if (size != -1) {
-                result.resize((size_t)size);
-                in.seekg(0, std::ios::beg);
-                in.read(&result[0], size);
-                in.close();
-            } else {
-                std::cerr << "Could not read from file " << filepath << std::endl;
-            }
-        } else {
-            std::cerr << "Could not open from file " << filepath << std::endl;
+        std::ifstream file(filepath);
+        if (!file.good()) {
+            std::cerr << "Could not read from file " << filepath << std::endl;
+            exit(EXIT_FAILURE);
         }
-
-        return result;
+        std::ostringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
     }
 
     Shader::Shader() {
